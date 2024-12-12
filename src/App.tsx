@@ -7,6 +7,7 @@ import Register from "./pages/register";
 import { AuthProvider } from "./context/AuthContext";
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ReimbursementDetails from "./pages/reimbursement-details";
 
 function App() {
   return (
@@ -28,9 +29,10 @@ function App() {
             }
           >
             <Route path="/" element={<Dashboard />} />
-
+            <Route path="/:id" element={<ReimbursementDetails />} />
             {/* Manager Routes */}
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/:id" element={<ReimbursementDetails />} />
           </Route>
         </Routes>
       </AuthProvider>

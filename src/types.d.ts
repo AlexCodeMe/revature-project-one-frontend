@@ -17,3 +17,18 @@ export interface AuthContextType extends AuthState {
   logout: () => void;
   isAuthenticated: boolean;
 }
+
+export type ReimbursementStatus = "PENDING" | "APPROVED" | "DENIED";
+
+export interface ReimbursementRequest {
+  amount: number;
+  description: string;
+  status: ReimbursementStatus;
+}
+
+export interface Reimbursement {
+    id: number
+    amount: number
+    description: string
+    status: ReimbursementStatus
+}

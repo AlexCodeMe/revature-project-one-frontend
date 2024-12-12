@@ -35,3 +35,13 @@ export const loginSchema = z.object({
 });
 
 export type LoginSchema = z.infer<typeof loginSchema>;
+
+export const reimbursementSchema = z.object({
+  amount: z.number().min(0.01, "Amount must be greater than 0"),
+  description: z
+    .string()
+    .min(10, "Description must be at least 10 characters")
+    .max(255, "Please limit the description to 255 characters"),
+});
+
+export type ReimbursementSchema = z.infer<typeof reimbursementSchema>;

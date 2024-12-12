@@ -1,5 +1,15 @@
 # ERS Project Tasks
 
+## random tasks
+
+- [ ] confirm modals (approve/deny, delete user, change description)
+- [ ] features: approve/deny, delete user, change description
+- [ ] add empty states
+- [ ] add loading state
+- [ ] add toast notifications
+- [ ] add error handling
+- [ ] add logout functionality
+
 ## Authentication
 
 - [x] Backend Auth setup

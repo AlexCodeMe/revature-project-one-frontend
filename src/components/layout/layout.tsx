@@ -1,21 +1,22 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./navbar";
 import Footer from "./footer";
+import { ModalProvider } from "../../context/ModelContext";
 
 export function Layout() {
   return (
-    <div>
-      {/** authenticated user header */}
-      {/** unauthenticated user header */}
-      <Navbar />
-      <main>
-        <Outlet />
-      </main>
+    <ModalProvider>
+      <div className="min-h-screen flex flex-col bg-zinc-200">
+        <Navbar />
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <Outlet />
+        </main>
 
-      {/** authenticated user footer */}
-      {/** unauthenticated user footer */}
-      <Footer />
-    </div>
+        {/** authenticated user footer */}
+        {/** unauthenticated user footer */}
+        <Footer />
+      </div>
+    </ModalProvider>
   );
 }
 
