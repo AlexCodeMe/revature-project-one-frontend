@@ -1,4 +1,3 @@
-import React from "react";
 import { useAuth } from "../../context/AuthContext";
 import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "./navbar";
@@ -17,7 +16,11 @@ export function Layout() {
     <div>
       {/** authenticated user header */}
       {/** unauthenticated user header */}
-      <Navbar authenticated={isAuthenticated} onLogout={handleLogout} user={user} />
+      <Navbar
+        authenticated={isAuthenticated}
+        onLogout={handleLogout}
+        user={user}
+      />
       <main>
         <Outlet />
       </main>
@@ -31,10 +34,18 @@ export function Layout() {
 
 export function AuthLayout() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md">
-        <Outlet />
+    <main className="flex h-screen items-center justify-center p-5 bg-gray-50">
+      <div className="flex h-full max-h-[40rem] w-full max-w-[64rem] overflow-hidden rounded-2xl bg-white shadow-2xl">
+        <div className="w-full space-y-10 overflow-y-auto p-10 md:w-1/2">
+          <Outlet />
+        </div>
+        <div
+          className="hidden w-1/2 bg-cover bg-center md:block"
+          style={{
+            backgroundImage: "url(src/assets/auth-background.jpg)",
+          }}
+        />
       </div>
-    </div>
+    </main>
   );
 }
