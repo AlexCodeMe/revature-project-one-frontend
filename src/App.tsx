@@ -1,9 +1,9 @@
-import AdminDashboard from "./components/admin-dashboard";
-import Dashboard from "./components/dashboard";
+import AdminDashboard from "./pages/admin-dashboard";
+import Dashboard from "./pages/dashboard";
 import { Layout, AuthLayout } from "./components/layout/layout";
-import Login from "./components/login";
-import ProtectRoute from "./components/protect-route";
-import Register from "./components/register";
+import Login from "./pages/login";
+import ProtectRoute from "./pages/protect-route";
+import Register from "./pages/register";
 import { AuthProvider } from "./context/AuthContext";
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";

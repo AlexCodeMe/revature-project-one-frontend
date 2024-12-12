@@ -1,9 +1,13 @@
 import { createContext, ReactNode, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContextType, AuthState } from "../types";
+import { LoginSchema, RegisterSchema } from "../lib/zod";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const navigate = useNavigate();
+
   const [auth, setAuth] = useState<AuthState>(() => {
     const token = localStorage.getItem("token");
     const userStr = localStorage.getItem("user");
@@ -13,14 +17,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   });
 
-  const login = async (username: string, password: string) => {
+  const login = async (values: LoginSchema) => {
     try {
       const response = await fetch("http://localhost:1234/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({
+          username: values.username,
+          password: values.password,
+        }),
       });
 
       if (!response.ok) {
@@ -36,8 +43,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
+
+      // TODO: toast
+      navigate("/");
     } catch (error) {
       console.error("Login failed", error);
+      throw error;
+    }
+  };
+
+  const register = async (values: RegisterSchema) => {
+    try {
+      const response = await fetch("http://localhost:1234/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      if (!response.ok) {
+        throw new Error("Register failed");
+      }
+
+      // TODO: toast
+      navigate("/login");
+    } catch (error) {
+      console.error("Register failed", error);
       throw error;
     }
   };
@@ -46,6 +77,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setAuth({ token: null, user: null });
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    navigate("/login");
+    // TODO: toast
   };
 
   return (
@@ -53,6 +86,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       value={{
         ...auth,
         login,
+        register,
         logout,
         isAuthenticated: !!auth.token,
       }}

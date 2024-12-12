@@ -1,15 +1,13 @@
-import { User } from "../../types";
+import { Link } from "react-router-dom";
 
-interface NavbarProps {
-  authenticated: boolean;
-  onLogout: () => void;
-  user: User | null;
-}
-
-export default function Navbar({ authenticated, onLogout, user }: NavbarProps) {
-  return authenticated ? (
-    <div>Authenticated Navbar</div>
-  ) : (
-    <div>Unauthenticated Navbar</div>
+export default function Navbar() {
+  return (
+    <header>
+      <nav>
+        <div>
+          <Link to="/">Home</Link>
+        </div>
+      </nav>
+    </header>
   );
 }
