@@ -2,6 +2,7 @@ import { createContext, ReactNode, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContextType, AuthState } from "../types";
 import { LoginSchema, RegisterSchema } from "../lib/zod";
+import { toast } from "sonner";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -31,7 +32,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
 
       if (!response.ok) {
-        throw new Error("Login failed");
+        const contentType = response.headers.get("content-type");
+        let errorMessage;
+
+        if (contentType && contentType.includes("application/json")) {
+          const error = await response.json();
+          errorMessage = error.message;
+        } else {
+          errorMessage = await response.text();
+        }
+
+        toast.error(errorMessage);
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
@@ -44,7 +56,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      // TODO: toast
       navigate("/");
     } catch (error) {
       console.error("Login failed", error);
@@ -62,10 +73,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         body: JSON.stringify(values),
       });
       if (!response.ok) {
-        throw new Error("Register failed");
+        const contentType = response.headers.get("content-type");
+        let errorMessage;
+
+        if (contentType && contentType.includes("application/json")) {
+          const error = await response.json();
+          errorMessage = error.message;
+        } else {
+          errorMessage = await response.text();
+        }
+
+        toast.error(errorMessage);
+        throw new Error(errorMessage);
       }
 
-      // TODO: toast
+      toast.success("Register successful");
       navigate("/login");
     } catch (error) {
       console.error("Register failed", error);
@@ -78,7 +100,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/login");
-    // TODO: toast
   };
 
   return (

@@ -27,8 +27,21 @@ export interface ReimbursementRequest {
 }
 
 export interface Reimbursement {
-    id: number
-    amount: number
-    description: string
-    status: ReimbursementStatus
+  id: number;
+  amount: number;
+  description: string;
+  status: ReimbursementStatus;
+
+  user: {
+    id: number;
+    firstName: string;
+    lastName: string;
+    username: string;
+  };
+  manager?: {
+    id: number;
+    firstName: string;
+    lastName: string;
+    username: string;
+  };
 }

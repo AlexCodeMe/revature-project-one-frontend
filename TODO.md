@@ -2,6 +2,7 @@
 
 ## random tasks
 
+- [ ] instead of reimbursement details page, have a modal that pops up and offers the user to update description
 - [ ] confirm modals (approve/deny, delete user, change description)
 - [ ] features: approve/deny, delete user, change description
 - [ ] add empty states
@@ -23,10 +24,10 @@
 
 ## Employee Features
 
-- [ ] Create Reimbursement form
-- [ ] View My Reimbursements
+- [x] Create Reimbursement form
+- [x] View My Reimbursements
 - [ ] View Pending Reimbursements
-- [ ] Update Description (optional)
+- [x] Update Description (optional)
 
 ## Manager Features
 

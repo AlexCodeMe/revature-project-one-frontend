@@ -8,6 +8,7 @@ import { AuthProvider } from "./context/AuthContext";
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReimbursementDetails from "./pages/reimbursement-details";
+import { Toaster } from "sonner";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="/admin/:id" element={<ReimbursementDetails />} />
           </Route>
         </Routes>
+        <Toaster />
       </AuthProvider>
     </BrowserRouter>
   );
