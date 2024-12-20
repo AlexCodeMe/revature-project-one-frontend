@@ -10,8 +10,9 @@ import { useAuth } from "../context/AuthContext";
 
 export default function Dashboard() {
   const { showNewReimbursementForm, setShowNewReimbursementForm } = useModal();
-  const { token } = useAuth();
+  const { token, user } = useAuth();
 
+  const [onlyPending, setOnlyPending] = useState(false);
   const [reimbursements, setReimbursements] = useState<Reimbursement[]>([]);
 
   useEffect(() => {
@@ -52,17 +53,14 @@ export default function Dashboard() {
       status: "PENDING",
     };
     try {
-      const response = await fetch(
-        "http://localhost:1234/reimbursements",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(request),
-        }
-      );
+      const response = await fetch("http://localhost:1234/reimbursements", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+      });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -77,7 +75,7 @@ export default function Dashboard() {
   };
 
   return (
-    <>
+    <div className="w-full mx-auto md:w-[768px] lg:w-[1024px]">
       {showNewReimbursementForm && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
@@ -94,12 +92,37 @@ export default function Dashboard() {
           </div>
         </div>
       )}
+
+      {/* Dashboard Header */}
+      <div className="flex items-center justify-between gap-x-6">
+        <button
+          onClick={() => setOnlyPending(!onlyPending)}
+          className={`
+            px-4 py-2 rounded-lg font-medium transition-colors w-full
+            ${
+              onlyPending
+                ? "text-sky-500 hover:text-sky-600 border border-sky-500 bg-sky-100"
+                : "text-emerald-500 hover:text-emerald-600 border border-emerald-500 bg-emerald-100"
+            }
+          `}
+        >
+          {onlyPending ? "Show All" : "Show Pending"}
+        </button>
+        <h1 className="text-2xl font-bold text-gray-900 w-full">
+          {user?.firstName}&apos;s Reimbursements
+        </h1>
+      </div>
+
       {/* Reimbursements Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
         {reimbursements.map((reimbursement, index) => (
-          <ReimbursementCard key={index} reimbursement={reimbursement} />
+          <ReimbursementCard
+            key={index}
+            reimbursement={reimbursement}
+            onlyPending={onlyPending}
+          />
         ))}
       </div>
-    </>
+    </div>
   );
 }

@@ -3,7 +3,7 @@ import { LoginSchema } from "../../lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../../lib/zod";
 import { useAuth } from "../../context/AuthContext";
-import { toast } from "sonner";
+// import { toast } from "sonner";
 
 export default function LoginForm() {
   const { login } = useAuth();
@@ -20,7 +20,7 @@ export default function LoginForm() {
     try {
       await login(data);
     } catch (error) {
-      toast.error("Login failed");
+      // toast.error("Login failed");
       console.error("Login failed", error);
     }
   }

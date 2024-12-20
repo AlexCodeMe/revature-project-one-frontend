@@ -10,10 +10,12 @@ const statusColors = {
 
 interface ReimbursementCardProps {
   reimbursement: Reimbursement;
+  onlyPending: boolean;
 }
 
 export default function ReimbursementCard({
   reimbursement,
+  onlyPending,
 }: ReimbursementCardProps) {
   const StatusIcon = {
     PENDING: Clock,
@@ -29,6 +31,9 @@ export default function ReimbursementCard({
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-const
   let row = "row";
+  if (onlyPending && reimbursement.status !== "PENDING") {
+    return null;
+  }
   return (
     <div
       className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer"
