@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { LogOut, Settings, UserIcon } from "lucide-react";
 import { Avatar } from "./avatar";
 import { MenuItem } from "./menu-item";
-import { User } from "../../types";
+import { User } from "../../lib/types";
 
 interface UserMenuProps {
   user: User | null;

@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { registerSchema, RegisterSchema } from "../../lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "../../context/AuthContext";
+import { toast } from "sonner";
 
 export default function RegisterForm() {
   const { register } = useAuth();
@@ -22,8 +23,9 @@ export default function RegisterForm() {
     try {
       console.log("register submitted ...", data);
       await register(data);
+      toast.success("Register successful");
     } catch (error) {
-      // TODO: toast
+      toast.error("Register failed");
       console.error("Register failed", error);
     }
   }

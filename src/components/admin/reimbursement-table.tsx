@@ -1,5 +1,5 @@
 import { Check, X } from "lucide-react";
-import { Reimbursement } from "../../types";
+import { Reimbursement } from "../../lib/types";
 import { useState } from "react";
 
 interface ReimbursementTableProps {

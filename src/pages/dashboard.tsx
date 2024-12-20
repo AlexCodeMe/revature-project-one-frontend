@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import ReimbursementCard from "../components/reimbursement-card";
-import { Reimbursement, ReimbursementRequest } from "../types";
 import { X } from "lucide-react";
+import { toast } from "sonner";
+
 import SubmitReimbursementRequest from "../components/submit-reimbursement-request";
+import { Reimbursement, ReimbursementRequest } from "../lib/types";
+import ReimbursementCard from "../components/reimbursement-card";
 import { useModal } from "../context/ModelContext";
 import { useAuth } from "../context/AuthContext";
 
@@ -33,7 +35,7 @@ export default function Dashboard() {
         const data = await response.json();
         setReimbursements(data);
       } catch (error) {
-        // todo: toast
+        toast.error("Error fetching user reimbursements");
         console.error("Error fetching user reimbursements:", error);
       }
     };
@@ -67,9 +69,9 @@ export default function Dashboard() {
       const data = await response.json();
       setReimbursements([...reimbursements, data]);
       setShowNewReimbursementForm(false);
-      // todo: toast
+      toast.success("Reimbursement request submitted successfully");
     } catch (error) {
-      // todo: toast
+      toast.error("Error submitting reimbursement request");
       console.error("Error submitting reimbursement request:", error);
     }
   };

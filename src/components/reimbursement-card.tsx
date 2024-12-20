@@ -1,5 +1,5 @@
 import { CheckCircle, Clock, DollarSign, XCircle } from "lucide-react";
-import { Reimbursement } from "../types";
+import { Reimbursement } from "../lib/types";
 import { useNavigate } from "react-router-dom";
 
 const statusColors = {

@@ -9,7 +9,7 @@
 - [ ] add loading state
 - [ ] add toast notifications
 - [ ] add error handling
-- [ ] add logout functionality
+- [x] add logout functionality
 
 ## Authentication
 

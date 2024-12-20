@@ -1,23 +1,23 @@
-import { useMemo } from 'react';
+import { useMemo } from "react";
 
 interface AvatarProps {
   name: string;
   imageUrl?: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
 }
 
 const sizeClasses = {
-  sm: 'h-8 w-8 text-sm',
-  md: 'h-10 w-10 text-base',
-  lg: 'h-12 w-12 text-lg',
+  sm: "h-8 w-8 text-sm",
+  md: "h-10 w-10 text-base",
+  lg: "h-12 w-12 text-lg",
 };
 
-export function Avatar({ name, imageUrl, size = 'md' }: AvatarProps) {
+export function Avatar({ name, imageUrl, size = "md" }: AvatarProps) {
   const initials = useMemo(() => {
     return name
-      .split(' ')
+      .split(" ")
       .map((n) => n[0])
-      .join('')
+      .join("")
       .toUpperCase();
   }, [name]);
 

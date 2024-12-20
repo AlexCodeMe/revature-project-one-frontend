@@ -1,14 +1,20 @@
-import { LucideIcon } from 'lucide-react';
+import { LucideIcon } from "lucide-react";
 
 interface MenuItemProps {
   icon: LucideIcon;
   label: string;
   onClick?: () => void;
-  variant?: 'default' | 'danger';
+  variant?: "default" | "danger";
 }
 
-export function MenuItem({ icon: Icon, label, onClick, variant = 'default' }: MenuItemProps) {
-  const baseClasses = "flex items-center w-full px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer";
+export function MenuItem({
+  icon: Icon,
+  label,
+  onClick,
+  variant = "default",
+}: MenuItemProps) {
+  const baseClasses =
+    "flex items-center w-full px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer";
   const variantClasses = {
     default: "text-gray-700 hover:text-gray-900",
     danger: "text-red-600 hover:text-red-700",

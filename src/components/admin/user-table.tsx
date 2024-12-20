@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User } from "../../types";
+import { User } from "../../lib/types";
 import { Trash2, UserCog } from "lucide-react";
 
 interface UserTableProps {

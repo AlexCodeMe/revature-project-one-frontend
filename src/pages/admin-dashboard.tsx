@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Clock, Receipt, Users } from "lucide-react";
+import { toast } from "sonner";
+
 import { UserTable } from "../components/admin/user-table";
 import { ReimbursementTable } from "../components/admin/reimbursement-table";
-import { Reimbursement, User } from "../types";
+import { Reimbursement, User } from "../lib/types";
 import { useAuth } from "../context/AuthContext";
-import { toast } from "sonner";
+import { DashboardStats } from "../components/admin/dashboard-stats";
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<"all" | "pending" | "users">(
@@ -54,7 +56,6 @@ export default function AdminDashboard() {
   ) => {
     console.log("Update status:", id, status);
     try {
-      // TODO: Implement status update logic
       const response = await fetch(
         `http://localhost:1234/reimbursements/manager/resolve/${id}?status=${status}`,
         {
@@ -139,13 +140,28 @@ export default function AdminDashboard() {
     }
   };
 
+  const stats = {
+    totalReimbursements: reimbursements.length,
+    pendingReimbursements: reimbursements.filter((r) => r.status === "PENDING")
+      .length,
+    approvedReimbursements: reimbursements.filter(
+      (r) => r.status === "APPROVED"
+    ).length,
+    deniedReimbursements: reimbursements.filter((r) => r.status === "DENIED")
+      .length,
+    totalAmount: reimbursements.reduce((sum, r) => sum + r.amount, 0),
+    pendingAmount: reimbursements
+      .filter((r) => r.status === "PENDING")
+      .reduce((sum, r) => sum + r.amount, 0),
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-2xl font-semibold text-gray-900 mb-8">
           Admin Dashboard
         </h1>
-
+        <DashboardStats stats={stats} />
         <div className="bg-white shadow rounded-lg">
           <div className="border-b border-gray-200">
             <nav className="flex -mb-px">

@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContextType, AuthState } from "../types";
+import { AuthContextType, AuthState } from "../lib/types";
 import { LoginSchema, RegisterSchema } from "../lib/zod";
 import { toast } from "sonner";
 

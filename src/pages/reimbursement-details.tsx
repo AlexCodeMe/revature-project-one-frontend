@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Reimbursement, ReimbursementStatus } from "../types";
+import { Reimbursement, ReimbursementStatus } from "../lib/types";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { toast } from "sonner";
 
 export default function ReimbursementDetails() {
   const { id } = useParams();
@@ -12,8 +13,6 @@ export default function ReimbursementDetails() {
   );
 
   const isAdmin = useAuth().user?.role === "MANAGER";
-  // TODO: send a proper response object from the backend
-  //   const isMyCard = reimbursement?.userId === user?.id;
 
   useEffect(() => {
     const fetchReimbursement = async () => {
@@ -56,10 +55,10 @@ export default function ReimbursementDetails() {
         }
       );
       if (!response.ok) throw new Error("Failed to approve reimbursement");
-      // todo: toast
+      toast.success("Reimbursement approved");
       console.log(`Reimbursement ${reimbursement.id} approved`);
     } catch {
-      // todo: toast
+      toast.error("Error approving reimbursement");
       console.error("Error approving reimbursement");
     }
   };
@@ -78,12 +77,12 @@ export default function ReimbursementDetails() {
         }
       );
       if (!response.ok) throw new Error("Failed to deny reimbursement");
-      // todo: toast
+      toast.success("Reimbursement denied");
       console.log(`Reimbursement ${reimbursement.id} denied`);
       const updatedReimbursement = await response.json();
       setReimbursement(updatedReimbursement);
     } catch {
-      // todo: toast
+      toast.error("Error denying reimbursement");
       console.error("Error denying reimbursement");
     }
   };
@@ -100,17 +99,17 @@ export default function ReimbursementDetails() {
             "Content-Type": "application/json",
           },
           // Send the description as a JSON string
-          body: description
+          body: description,
         }
       );
 
       if (!response.ok) throw new Error("Failed to update description");
       const updatedReimbursement = await response.json();
       setReimbursement(updatedReimbursement);
-      // todo: add success toast
+      toast.success("Reimbursement description updated");
     } catch (error) {
       console.error("Error updating description:", error);
-      // todo: add error toast
+      toast.error("Error updating description");
     }
   };
 
@@ -148,7 +147,7 @@ export default function ReimbursementDetails() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="border-none rounded-lg p-1.5 w-full"
-            rows={description?.split('\n').length || 1}
+            rows={description?.split("\n").length || 1}
           />
         </div>
       </div>
