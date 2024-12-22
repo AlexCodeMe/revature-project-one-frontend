@@ -54,7 +54,7 @@ export default function RegisterForm() {
           />
         </div>
       </div>
-      <div className="flex flex-col gap-2">
+      {/* <div className="flex flex-col gap-2">
         <p className="text-sm font-medium tracking-wide text-center">role</p>
         <select
           {...form.register("role")}
@@ -63,7 +63,7 @@ export default function RegisterForm() {
           <option value="EMPLOYEE">Employee</option>
           <option value="MANAGER">Manager</option>
         </select>
-      </div>
+      </div> */}
       <div className="flex flex-col gap-2">
         <p className="text-sm font-medium tracking-wide text-center">
           username

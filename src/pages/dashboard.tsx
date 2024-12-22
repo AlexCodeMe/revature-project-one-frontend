@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import { toast } from "sonner";
 
 import SubmitReimbursementRequest from "../components/submit-reimbursement-request";
@@ -96,21 +96,28 @@ export default function Dashboard() {
       {/* Dashboard Header */}
       <div className="flex items-center justify-between gap-x-6">
         <button
+          onClick={() => setShowNewReimbursementForm(true)}
+          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          <Plus className="h-5 w-5 mr-2" />
+          New Reimbursement
+        </button>
+        <h1 className="text-2xl font-bold text-gray-900">
+          {user?.firstName}&apos;s Reimbursements
+        </h1>
+        <button
           onClick={() => setOnlyPending(!onlyPending)}
           className={`
-            px-4 py-2 rounded-lg font-medium transition-colors w-full
-            ${
-              onlyPending
-                ? "text-sky-500 hover:text-sky-600 border border-sky-500 bg-sky-100"
-                : "text-emerald-500 hover:text-emerald-600 border border-emerald-500 bg-emerald-100"
-            }
-          `}
+      px-4 py-2 rounded-lg font-medium transition-colors
+      ${
+        onlyPending
+          ? "text-sky-500 hover:text-sky-600 border border-sky-500 bg-sky-100"
+          : "text-emerald-500 hover:text-emerald-600 border border-emerald-500 bg-emerald-100"
+      }
+    `}
         >
           {onlyPending ? "Show All" : "Show Pending"}
         </button>
-        <h1 className="text-2xl font-bold text-gray-900 w-full">
-          {user?.firstName}&apos;s Reimbursements
-        </h1>
       </div>
 
       {/* Reimbursements Grid */}
