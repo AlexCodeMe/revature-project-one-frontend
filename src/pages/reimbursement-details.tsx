@@ -12,8 +12,6 @@ export default function ReimbursementDetails() {
     null
   );
 
-  const isAdmin = useAuth().user?.role === "MANAGER";
-
   useEffect(() => {
     const fetchReimbursement = async () => {
       try {
@@ -41,51 +39,6 @@ export default function ReimbursementDetails() {
 
   if (!reimbursement) return <div>Loading...</div>;
 
-  const handleApprove = async () => {
-    console.log("approve");
-    try {
-      const response = await fetch(
-        `http://localhost:1234/reimbursements/manager/resolve/${reimbursement.id}?status=APPROVED`,
-        {
-          method: "PATCH",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (!response.ok) throw new Error("Failed to approve reimbursement");
-      toast.success("Reimbursement approved");
-      console.log(`Reimbursement ${reimbursement.id} approved`);
-    } catch {
-      toast.error("Error approving reimbursement");
-      console.error("Error approving reimbursement");
-    }
-  };
-
-  const handleDeny = async () => {
-    console.log("deny");
-    try {
-      const response = await fetch(
-        `http://localhost:1234/reimbursements/manager/resolve/${reimbursement.id}?status=DENIED`,
-        {
-          method: "PATCH",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (!response.ok) throw new Error("Failed to deny reimbursement");
-      toast.success("Reimbursement denied");
-      console.log(`Reimbursement ${reimbursement.id} denied`);
-      const updatedReimbursement = await response.json();
-      setReimbursement(updatedReimbursement);
-    } catch {
-      toast.error("Error denying reimbursement");
-      console.error("Error denying reimbursement");
-    }
-  };
 
   const handleUpdateDescription = async () => {
     console.log("update description");
@@ -98,7 +51,6 @@ export default function ReimbursementDetails() {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          // Send the description as a JSON string
           body: description,
         }
       );
@@ -153,22 +105,6 @@ export default function ReimbursementDetails() {
       </div>
 
       <div className="flex justify-end gap-x-6 pt-6">
-        {isAdmin && (
-          <>
-            <button
-              onClick={handleApprove}
-              className="bg-green-500 text-white px-4 py-2 rounded-md"
-            >
-              Approve
-            </button>
-            <button
-              onClick={handleDeny}
-              className="bg-red-500 text-white px-4 py-2 rounded-md"
-            >
-              Deny
-            </button>
-          </>
-        )}
         <button
           onClick={handleUpdateDescription}
           className="bg-blue-500 text-white px-4 py-2 rounded-md"

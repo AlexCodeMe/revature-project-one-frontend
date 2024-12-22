@@ -25,7 +25,7 @@ export default function RegisterForm() {
       await register(data);
       toast.success("Register successful");
     } catch (error) {
-      toast.error("Register failed");
+      // toast.error("Register failed");
       console.error("Register failed", error);
     }
   }
