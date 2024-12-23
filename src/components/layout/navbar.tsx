@@ -1,12 +1,10 @@
-import { Plus, Receipt } from "lucide-react";
-import { useModal } from "../../context/ModelContext";
+import { Receipt } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserMenu } from "../user-menu";
 import { useAuth } from "../../context/AuthContext";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
-  // const { setShowNewReimbursementForm } = useModal();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -32,15 +30,6 @@ export default function Navbar() {
                 Admin Dashboard
               </Link>
             )}
-            {/* {!isAdminPage && (
-              <button
-                onClick={() => setShowNewReimbursementForm(true)}
-                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                <Plus className="h-5 w-5 mr-2" />
-                New Reimbursement
-              </button>
-            )} */}
             <UserMenu user={user} onLogout={logout} />
           </div>
         </div>
